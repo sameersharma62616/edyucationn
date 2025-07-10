@@ -25,14 +25,28 @@ router.post("/", verifyToken, isTeacher, async (req, res) => {
 
 // Get All Lectures (Student)
 // ✅ Public route (no verifyToken middleware)
+// router.get("/", async (req, res) => {
+//   try {
+//     const lectures = await Lecture.find().populate("createdBy", "name");
+    
+//     res.json(lectures);
+//   } catch (err) {
+//     res.status(500).json({ error: "Failed to load lectures" });
+//   }
+// });
+
 router.get("/", async (req, res) => {
   try {
-    const lectures = await Lecture.find().populate("createdBy", "name");
+    const lectures = await Lecture.find()
+      .populate("createdBy", "name") // ✅ populate teacher's name
+      .populate("comments.commentedBy", "name"); // ✅ populate comment user name
+
     res.json(lectures);
   } catch (err) {
     res.status(500).json({ error: "Failed to load lectures" });
   }
 });
+
 // Get Lectures by Teacher
 router.get("/teacher/:id", verifyToken, async (req, res) => {
   const lectures = await Lecture.find({ createdBy: req.params.id });

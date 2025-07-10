@@ -5,6 +5,7 @@ const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const lectureRoutes = require("./routes/lectureRoutes");
 const userRoutes = require("./routes/userRoutes");
+const playlistRoutes = require("./routes/playlistRoutes");
 require("dotenv").config();
 
 const app = express();
@@ -16,6 +17,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/lectures", lectureRoutes);
+app.use("/api/playlists", playlistRoutes);
 
 // Routes Placeholder
 app.get("/", (req, res) => {

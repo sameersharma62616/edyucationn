@@ -77,45 +77,6 @@ router.get("/saved/lectures", verifyToken, async (req, res) => {
   }
 });
 
-// Admin: Get all teachers with lecture & comment details
-// router.get("/admin/teachers/details", verifyToken, async (req, res) => {
-//   if (req.user.role !== "admin") {
-//     return res.status(403).json({ message: "Unauthorized" });
-//   }
-
-//   try {
-//     const teachers = await User.find({ role: "teacher" });
-
-//     const result = await Promise.all(
-//       teachers.map(async (teacher) => {
-//         const lectures = await Lecture.find({ createdBy: teacher._id })
-//           .populate("comments.commentedBy", "name")
-//           .lean();
-
-//         return {
-//           teacherId: teacher._id,
-//           name: teacher.name,
-//           email: teacher.email,
-//           lectureCount: lectures.length,
-//           lectures: lectures.map((lec) => ({
-//             id: lec._id,
-//             title: lec.title,
-//             subject: lec.subject,
-//             likes: lec.likes?.length || 0,
-//             comments: lec.comments.map((c) => ({
-//               text: c.text,
-//               by: c.commentedBy?.name || "User",
-//             })),
-//           })),
-//         };
-//       })
-//     );
-
-//     res.json(result);
-//   } catch (err) {
-//     res.status(500).json({ message: "Error fetching details", error: err.message });
-//   }
-// });
 
 // ❌ DELETE teacher (admin only)
 router.delete("/admin/delete/:id", verifyToken, async (req, res) => {
